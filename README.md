@@ -31,7 +31,8 @@ Python script designed for keeping up to date with the latest Factorio-Headless 
 
 
     ===> New Update Available -- Version (0.15.38), Update with, "python3 factorio.py --experimental --download"
-
+    
+    root@my-server:
 # Example download
     root@my-server: python3 factorio.py  --experimental --download
     
