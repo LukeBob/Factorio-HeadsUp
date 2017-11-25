@@ -209,7 +209,7 @@ Your version:   ({0})
 ----------------
 Latest Version: ({1})
 ----------------
-            """.format(Color.red(sta_cur), Color.green(site_version)))
+            """.format(Color.red(exp_cur), Color.green(site_version)))
             print(Color.green("\n\n===>")+" New Update Available -- Version ({0}), Update with, \"python3 factorio.py --experimental --download\"\n".format(Color.blue(site_version)))
             exit(0)
 
