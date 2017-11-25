@@ -8,7 +8,7 @@ Python script designed for keeping up to date with the latest Factorio-Headless 
 # Run
     python3 factorio.py --stable/experimental --check/download
     
-# Example
+# Example check
 
     root@my-server: python3 factorio.py  --experimental --check
 
@@ -32,6 +32,7 @@ Python script designed for keeping up to date with the latest Factorio-Headless 
 
     ===> New Update Available -- Version (0.15.38), Update with, "python3 factorio.py --experimental --download"
 
+# Example download
     root@my-server: python3 factorio.py  --experimental --download
     
      _____         _             _         _   _                _     _   _
