@@ -67,9 +67,9 @@ class Factorio():
                 return(i)
 
         except:
-            raise
+            print(Color.red("\n[Error]:")+"Could not find the latest version from: https://www.factorio.com/download-headless/experimental")
             exit(0)
-
+           
 
 ## Downloads Latest Version
 def Download(version, link):
