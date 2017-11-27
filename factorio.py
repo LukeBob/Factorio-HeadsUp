@@ -27,7 +27,6 @@ class Color():
 ## Bruce Banner
 banner = (Color.green(
     """
-
  _____         _             _         _   _                _     _   _
 |  ___|       | |           (_)       | | | |              | |   | | | |
 | |_ __ _  ___| |_ ___  _ __ _  ___   | |_| | ___  __ _  __| |___| | | |_ __
@@ -70,6 +69,7 @@ class Factorio():
         except:
             raise
             exit(0)
+
 
 ## Downloads Latest Version
 def Download(version, link):
@@ -182,7 +182,7 @@ Latest Version: ({1})
             exit(0)
 
 
-    if args.stable and args.download:
+    elif args.stable and args.download:
         app = Factorio('stable')
         site_version = app.RequestVersion()
         (sta_cur, exp_cur) = parse_config()
@@ -196,7 +196,7 @@ Latest Version: ({1})
             update_config('stable', site_version)
 
 
-    if args.experimental and args.check:
+    elif args.experimental and args.check:
         app = Factorio('experimental')
         site_version = app.RequestVersion()
         (sta_cur, exp_cur) = parse_config()
@@ -213,7 +213,7 @@ Latest Version: ({1})
             print(Color.green("\n\n===>")+" New Update Available -- Version ({0}), Update with, \"python3 factorio.py --experimental --download\"\n".format(Color.blue(site_version)))
             exit(0)
 
-    if args.experimental and args.download:
+    elif args.experimental and args.download:
         app = Factorio('stable')
         site_version = app.RequestVersion()
         (sta_cur, exp_cur) = parse_config()
@@ -228,6 +228,9 @@ Latest Version: ({1})
             update_config('experimental', site_version)
             exit(0)
 
+    else:
+        parser.print_help()
+        exit(0)
 
 if __name__ == '__main__':
     ## Argparse Stuff
@@ -239,3 +242,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(banner)
     main(args, parser)
+
