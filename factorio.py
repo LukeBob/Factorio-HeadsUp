@@ -212,7 +212,7 @@ Latest Version: ({1})
             exit(0)
 
     elif args.experimental and args.download:
-        app = Factorio('stable')
+        app = Factorio('experimental')
         site_version = app.RequestVersion()
         (sta_cur, exp_cur) = parse_config()
 
