@@ -51,11 +51,8 @@ class Factorio():
 ## Gets Latest Version
     def RequestVersion(self):
         try:
-            url_list = []
-            if(self.version == None):
-                return(None)
-            r=requests.get("{0}".format(self.url))
-
+            r=requests.get(self.url)
+            
             s = re.findall("Stable: (\d{0,3}.\d{0,3}.\d{0,3})", r.text)
             e = re.findall("Experimental: (\d{0,3}.\d{0,3}.\d{0,3})", r.text)
 
