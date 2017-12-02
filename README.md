@@ -13,4 +13,4 @@ Python script designed for keeping up to date with the latest Factorio-Headless 
     
 # Example
 
-<img src='https://gfycat.com/ifr/FlickeringLikelyErne' frameborder='0' scrolling='no' width='600' height='286' allowfullscreen></img>
+<img src='https://thumbs.gfycat.com/FlickeringLikelyErne-size_restricted.gif' frameborder='0' scrolling='no' width='600' height='286' allowfullscreen></img>
