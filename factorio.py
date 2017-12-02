@@ -5,7 +5,9 @@ import json
 import re, os, sys
 
 Author = "LukeBob"
-## Coulors
+
+
+## Colours
 class Color():
     @staticmethod
     def red(str):
@@ -128,7 +130,11 @@ def update_config(type, version):
             return(None)
 
         print(Color.green("\n===>")+" Updated Json Config")
-
+        print(Color.green("\n===>")+"Finished...\n")
+        
+        
+        
+## Removes old factorio.tar.gz        
 def Remove_junk(version):
     try:
         cmd = "rm -r factorio-headless-{0}.tar.gz".format(version)
@@ -136,6 +142,9 @@ def Remove_junk(version):
     except:
         raise
     print(Color.green("\n===>")+" Removed Junk Files")
+    
+    
+    
 ## Parses Current Versions From Json Configs
 def parse_config():
     try:
@@ -150,9 +159,13 @@ def parse_config():
     exp_cur = config["Experimental"]
     return(sta_cur, exp_cur)
 
+
+
 ## Main Stuff
 def main(args, parser):
 
+    
+## stable check
     if args.stable and args.check:
         app = Factorio('stable')
         site_version = app.RequestVersion()
@@ -180,7 +193,7 @@ Latest Version: ({1})
             print(Color.green("\n\n===>")+" Up to date with the latest binary -- Version ({0})\n".format(Color.blue(site_version)))
             exit(0)
 
-
+## stable download
     elif args.stable and args.download:
         app = Factorio('stable')
         site_version = app.RequestVersion()
@@ -194,7 +207,7 @@ Latest Version: ({1})
             Remove_junk(site_version)
             update_config('stable', site_version)
 
-
+## experimental check
     elif args.experimental and args.check:
         app = Factorio('experimental')
         site_version = app.RequestVersion()
@@ -212,6 +225,7 @@ Latest Version: ({1})
             print(Color.green("\n\n===>")+" New Update Available -- Version ({0}), Update with, \"python3 factorio.py --experimental --download\"\n".format(Color.blue(site_version)))
             exit(0)
 
+## experimental download            
     elif args.experimental and args.download:
         app = Factorio('experimental')
         site_version = app.RequestVersion()
