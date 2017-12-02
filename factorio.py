@@ -197,7 +197,7 @@ Latest Version: ({1})
         (sta_cur, exp_cur) = parse_config()
 
         if site_version == sta_cur:
-            print(Color.red("\nERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json values back to (0) and running again.\n".format(Color.blue(sta_cur)))
+            print(Color.red("\nERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json stable value back to (0) and running again.\n".format(Color.blue(sta_cur)))
             exit(0)
         elif site_version != sta_cur:
             Download(site_version, app.url)
@@ -229,7 +229,7 @@ Latest Version: ({1})
         (sta_cur, exp_cur) = parse_config()
 
         if site_version == exp_cur:
-            print(Color.red("\n[+] ERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json values back to (0) and running again.\n".format(Color.blue(exp_cur)))
+            print(Color.red("\n[+] ERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json experimental value back to (0) and running again.\n".format(Color.blue(exp_cur)))
             exit(0)
 
         elif site_version != exp_cur:
