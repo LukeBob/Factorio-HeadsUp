@@ -57,6 +57,8 @@ Python script designed for keeping up to date with the latest Factorio-Headless 
 
     ===> Updated Json Config
     
+    ===> Finished...
+    
     root@my-server:
 
     
