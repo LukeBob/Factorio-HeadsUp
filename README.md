@@ -14,4 +14,4 @@ Python script designed for keeping up to date with the latest Factorio-Headless 
 # Example
 
 
-   <iframe src='https://gfycat.com/ifr/FlickeringLikelyErne' frameborder='0' scrolling='no' width='600' height='286' allowfullscreen></iframe>
+   []<iframe src='https://gfycat.com/ifr/FlickeringLikelyErne' frameborder='0' scrolling='no' width='600' height='286' allowfullscreen></iframe>
