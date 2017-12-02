@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 import argparse
 import requests
 import tarfile
@@ -53,23 +52,22 @@ class Factorio():
             url_list = []
             if(self.version == None):
                 return(None)
-            if(self.version == 'stable'):
-                r=requests.get("{0}{1}".format(self.url, self.stable))
-            elif(self.version == 'experimental'):
-                r=requests.get("{0}{1}".format(self.url, self.experimental))
+            r=requests.get("{0}".format(self.url))
 
-            soup = BeautifulSoup(r.text, 'lxml')
-            for link in re.findall('(\/get-download\/.*\d\d\")', str(soup)):
-                url_list.append(link[:-1])
+            s = re.findall("Stable: (\d{0,3}.\d{0,3}.\d{0,3})", r.text)
+            e = re.findall("Experimental: (\d{0,3}.\d{0,3}.\d{0,3})", r.text)
 
-            ver = re.findall('(\d.*\d)', str(url_list[0][:-2]))
-            for i in ver:
+            if self.version == 'stable':
+                i = s[0]
                 return(i)
 
+            elif self.version == 'experimental':
+                i = e [0]
+                return(i)
         except:
-            print(Color.red("\n[Error]:")+"Could not find the latest version from: https://www.factorio.com/download-headless/experimental")
+            print(Color.red("\n[Error]:")+"Could not find the latest version from: https://www.factorio.com")
             exit(0)
-           
+
 
 ## Downloads Latest Version
 def Download(version, link):
@@ -219,7 +217,7 @@ Latest Version: ({1})
         (sta_cur, exp_cur) = parse_config()
 
         if site_version == exp_cur:
-            print(Color.red("\nERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json values back to (0) and running again.\n".format(exp_cur))
+            print(Color.red("\n[+] ERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json values back to (0) and running again.\n".format(exp_cur))
             exit(0)
 
         elif site_version != exp_cur:
@@ -242,4 +240,3 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(banner)
     main(args, parser)
-
