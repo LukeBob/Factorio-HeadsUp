@@ -118,6 +118,7 @@ def update_config(type, version):
         except:
             raise
         print(Color.green("\n===>")+" Updated Json Config")
+        print(Color.green("\n===>")+"Finished...\n")
 
     elif type == "experimental":
         try:
