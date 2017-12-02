@@ -9,7 +9,7 @@ Python script designed for keeping up to date with the latest Factorio-Headless 
     python3 factorio.py --stable/experimental --check/download
     
 # Force
-    To force download, change Config.json value back to 0 deppending on wich version. 
+    To force download, change Config.json value back to 0 depending on wich version. 
     
 # Example check
 
