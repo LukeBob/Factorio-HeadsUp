@@ -120,7 +120,7 @@ def update_config(type, version):
         except:
             raise
         print(Color.green("\n===>")+" Updated Json Config")
-        print(Color.green("\n===>")+"Finished...\n")
+        print(Color.green("\n===>")+" Finished...\n")
 
     elif type == "experimental":
         try:
@@ -130,7 +130,7 @@ def update_config(type, version):
             return(None)
 
         print(Color.green("\n===>")+" Updated Json Config")
-        print(Color.green("\n===>")+"Finished...\n")
+        print(Color.green("\n===>")+" Finished...\n")
         
         
         
