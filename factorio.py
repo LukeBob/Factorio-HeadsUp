@@ -3,7 +3,8 @@ import argparse
 import requests
 import tarfile
 import json
-import re, os, sys
+import re
+import os
 
 Author = "LukeBob"
 
