@@ -1,3 +1,4 @@
+#!/usr/bin/env/ python3
 import argparse
 import requests
 import tarfile
@@ -5,7 +6,6 @@ import json
 import re, os, sys
 
 Author = "LukeBob"
-
 
 ## Colours
 class Color():
@@ -25,7 +25,8 @@ class Color():
     def blue(str):
         return "\033[94m" + str + "\033[0m"
 
-## Bruce Banner
+    
+## Banner
 banner = (Color.green(
     """
  _____         _             _         _   _                _     _   _
@@ -40,7 +41,9 @@ Author: {0}
     """).format(Color.blue(Author)))
 
 
-## Factorio Main CLass Example, app = Factorio('Stable').RequestVersion() <== Gets you Latest Version From https://factorio.com/
+
+
+## Factorio Main Class Example, app = Factorio('Stable').RequestVersion() <== Gets you Latest Version From https://factorio.com/
 class Factorio():
     def __init__(self, version):
         self.version      = version
@@ -133,7 +136,7 @@ def update_config(type, version):
         print(Color.green("\n===>")+" Finished...\n")
 
 
-
+        
 ## Removes old factorio.tar.gz
 def Remove_junk(version):
     try:
@@ -187,7 +190,6 @@ Latest Version: ({1})
 
 
 
-
 ## Main Stuff
 def main(args, parser):
 
@@ -217,17 +219,18 @@ def main(args, parser):
         if site_version == sta_cur:
             print(Color.red("\nERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json stable value back to (0) and running again.\n".format(Color.blue(sta_cur)))
             exit(0)
+            
         elif site_version != sta_cur:
             app.Download(site_version, app.url)
             Remove_junk(site_version)
             update_config('stable', site_version)
 
+            
 ## experimental check
     elif args.experimental and args.check:
         app = Factorio('experimental')
         site_version = app.RequestVersion()
         (sta_cur, exp_cur) = parse_config()
-
 
         if site_version != exp_cur:
             print_versions.experimental(exp_cur, site_version)
@@ -254,7 +257,6 @@ def main(args, parser):
             Remove_junk(site_version)
             update_config('experimental', site_version)
             exit(0)
-
     else:
         parser.print_help()
         exit(0)
