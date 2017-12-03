@@ -52,7 +52,7 @@ class Factorio():
     def RequestVersion(self):
         try:
             r=requests.get(self.url)
-            
+
             s = re.findall("Stable: (\d{0,3}.\d{0,3}.\d{0,3})", r.text)
             e = re.findall("Experimental: (\d{0,3}.\d{0,3}.\d{0,3})", r.text)
 
@@ -95,8 +95,8 @@ class Factorio():
         except tarfile.ReadError:
             print(Color.red("\n[Error]:")+" Tarfile could not open file {0}. Are you using python3 ?. ".format(Color.blue(local_filename)))
             exit(0)
-            
-            
+
+
 ## Gets New Json Data Ready For Writing To New Json File
 def write_json(sta_cur, exp_cur):
     data = {}
@@ -131,10 +131,10 @@ def update_config(type, version):
 
         print(Color.green("\n===>")+" Updated Json Config")
         print(Color.green("\n===>")+" Finished...\n")
-        
-        
-        
-## Removes old factorio.tar.gz        
+
+
+
+## Removes old factorio.tar.gz
 def Remove_junk(version):
     try:
         cmd = "rm -r factorio-headless-{0}.tar.gz".format(version)
@@ -142,9 +142,9 @@ def Remove_junk(version):
     except:
         raise
     print(Color.green("\n===>")+" Removed Junk Files")
-    
-    
-    
+
+
+
 ## Parses Current Versions From Json Configs
 def parse_config():
     try:
@@ -161,10 +161,37 @@ def parse_config():
 
 
 
+class print_versions:
+
+    @staticmethod
+    def stable(sta_cur, site_version):
+
+        print("""
+----------------
+Your version:   ({0})
+----------------
+Latest Version: ({1})
+----------------
+        """.format(Color.red(sta_cur), Color.green(site_version)))
+
+
+    @staticmethod
+    def experimental(exp_cur, site_version):
+        print("""
+----------------
+Your version:   ({0})
+----------------
+Latest Version: ({1})
+----------------
+        """.format(Color.red(exp_cur), Color.green(site_version)))
+
+
+
+
 ## Main Stuff
 def main(args, parser):
 
-    
+
 ## stable check
     if args.stable and args.check:
         app = Factorio('stable')
@@ -172,24 +199,12 @@ def main(args, parser):
         (sta_cur, exp_cur) = parse_config()
 
         if site_version != sta_cur:
-            print("""
-----------------
-Your version:   ({0})
-----------------
-Latest Version: ({1})
-----------------
-            """.format(Color.red(sta_cur), Color.green(site_version)))
+            print_versions.stable(sta_cur, site_version)
             print(Color.green("\n\n===>")+" New Update Available -- Version ({0}), Update with, \"python3 factorio.py --stable --download\"\n".format(Color.blue(site_version)))
             exit(0)
 
         elif site_version == sta_cur:
-            print("""
-----------------
-Your version:   ({0})
-----------------
-Latest Version: ({1})
-----------------
-            """.format(Color.green(sta_cur), Color.green(site_version)))
+            print_versions.stable(sta_cur, site_version)
             print(Color.green("\n\n===>")+" Up to date with the latest binary -- Version ({0})\n".format(Color.blue(site_version)))
             exit(0)
 
@@ -215,17 +230,16 @@ Latest Version: ({1})
 
 
         if site_version != exp_cur:
-            print("""
-----------------
-Your version:   ({0})
-----------------
-Latest Version: ({1})
-----------------
-            """.format(Color.red(exp_cur), Color.green(site_version)))
+            print_versions.experimental(exp_cur, site_version)
             print(Color.green("\n\n===>")+" New Update Available -- Version ({0}), Update with, \"python3 factorio.py --experimental --download\"\n".format(Color.blue(site_version)))
             exit(0)
 
-## experimental download            
+        elif site_version == exp_cur:
+            print_versions.experimental(exp_cur, site_version)
+            print(Color.green("\n\n===>")+" Up to date with the latest binary -- Version ({0})\n".format(Color.blue(site_version)))
+            exit(0)
+
+## experimental download
     elif args.experimental and args.download:
         app = Factorio('experimental')
         site_version = app.RequestVersion()
