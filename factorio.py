@@ -194,7 +194,6 @@ Latest Version: ({1})
 ## Main Stuff
 def main(args, parser):
 
-
 ## stable check
     if args.stable and args.check:
         app = Factorio('stable')
