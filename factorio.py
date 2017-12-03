@@ -69,31 +69,34 @@ class Factorio():
 
 
 ## Downloads Latest Version
-def Download(version, link):
-    url = "{0}/get-download/{1}/headless/linux64".format(link, version)
-    local_filename = "factorio-headless-{0}.tar.gz".format(version)
-    print("\n"+Color.green("===>")+" Latest Version: {0}".format(version))
+    @staticmethod
+    def Download(version, link):
+        url = "{0}/get-download/{1}/headless/linux64".format(link, version)
+        local_filename = "factorio-headless-{0}.tar.gz".format(version)
+        print("\n"+Color.green("===>")+" Latest Version: {0}".format(version))
 
-    try:
-        r=requests.get(url, stream=True)
-        with open(local_filename, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=4096):
-                if chunk:
-                    f.write(chunk)
-    except:
-        raise
-        exit(0)
+        try:
+            r=requests.get(url, stream=True)
+            with open(local_filename, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=4096):
+                    if chunk:
+                        f.write(chunk)
+        except:
+            raise
+            exit(0)
 
-    print("\n"+Color.green("===>")+" Downloaded File: {0}".format(local_filename))
+        print("\n"+Color.green("===>")+" Downloaded File: {0}".format(local_filename))
 
-    try:
-        print("\n"+Color.green("===>")+" Extracting ({0}) to (factorio)".format(local_filename))
-        tar = tarfile.open(local_filename)
-        tar.extractall(path='factorio-new-{0}'.format(version))
-        tar.close()
-    except:
-        raise
-
+        try:
+            print("\n"+Color.green("===>")+" Extracting ({0}) to (factorio)".format(local_filename))
+            tar = tarfile.open(local_filename)
+            tar.extractall(path='factorio-new-{0}'.format(version))
+            tar.close()
+        except tarfile.ReadError:
+            print(Color.red("\n[Error]:")+" Tarfile could not open file {0}. Are you using python3 ?. ".format(Color.blue(local_filename)))
+            exit(0)
+            
+            
 ## Gets New Json Data Ready For Writing To New Json File
 def write_json(sta_cur, exp_cur):
     data = {}
@@ -200,7 +203,7 @@ Latest Version: ({1})
             print(Color.red("\nERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json stable value back to (0) and running again.\n".format(Color.blue(sta_cur)))
             exit(0)
         elif site_version != sta_cur:
-            Download(site_version, app.url)
+            app.Download(site_version, app.url)
             Remove_junk(site_version)
             update_config('stable', site_version)
 
@@ -233,7 +236,7 @@ Latest Version: ({1})
             exit(0)
 
         elif site_version != exp_cur:
-            Download(site_version, app.url)
+            app.Download(site_version, app.url)
             Remove_junk(site_version)
             update_config('experimental', site_version)
             exit(0)
