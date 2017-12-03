@@ -74,8 +74,8 @@ class Factorio():
 
 ## Downloads Latest Version
     @staticmethod
-    def Download(version, link):
-        url = "{0}/get-download/{1}/headless/linux64".format(link, version)
+    def Download(version):
+        url = "https://www.factorio.com/get-download/{0}/headless/linux64".format(version)
         local_filename = "factorio-headless-{0}.tar.gz".format(version)
         print("\n"+Color.green("===>")+" Latest Version: {0}".format(version))
 
@@ -222,7 +222,7 @@ def main(args, parser):
             exit(0)
             
         elif site_version != sta_cur:
-            app.Download(site_version, app.url)
+            app.Download(site_version)
             Remove_junk(site_version)
             update_config('stable', site_version)
 
@@ -254,7 +254,7 @@ def main(args, parser):
             exit(0)
 
         elif site_version != exp_cur:
-            app.Download(site_version, app.url)
+            app.Download(site_version)
             Remove_junk(site_version)
             update_config('experimental', site_version)
             exit(0)
