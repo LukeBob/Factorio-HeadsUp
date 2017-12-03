@@ -218,7 +218,7 @@ def main(args, parser):
         (sta_cur, exp_cur) = parse_config()
 
         if site_version == sta_cur:
-            print(Color.red("\nERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json stable value back to (0) and running again.\n".format(Color.blue(sta_cur)))
+            print(Color.red("\n[+] ERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json stable value back to (0) and running again.\n".format(Color.blue(sta_cur)))
             exit(0)
             
         elif site_version != sta_cur:
