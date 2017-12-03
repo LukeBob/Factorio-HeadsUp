@@ -1,4 +1,5 @@
-[![Packagist](https://img.shields.io/badge/game-Factorio-orange.svg)]() [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
+[![Packagist](https://img.shields.io/badge/game-Factorio-orange.svg)]()  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()  [![Packagist](https://img.shields.io/badge/python-3.5-brightgreen.svg)]() 
+
 
 
 
