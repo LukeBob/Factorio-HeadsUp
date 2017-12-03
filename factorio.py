@@ -170,22 +170,22 @@ class print_versions:
     def stable(sta_cur, site_version):
 
         print("""
-----------------
+------------------------
 Your version:   ({0})
-----------------
+------------------------
 Latest Version: ({1})
-----------------
+------------------------
         """.format(Color.red(sta_cur), Color.green(site_version)))
 
 
     @staticmethod
     def experimental(exp_cur, site_version):
         print("""
-----------------
+------------------------
 Your version:   ({0})
-----------------
+------------------------
 Latest Version: ({1})
-----------------
+------------------------
         """.format(Color.red(exp_cur), Color.green(site_version)))
 
 
