@@ -1,7 +1,5 @@
  #
-     [![Packagist](https://img.shields.io/badge/game-Factorio-orange.svg)]()  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()  [![Packagist](https://img.shields.io/badge/language-python3.5-brightgreen.svg)]() [![Packagist](https://img.shields.io/badge/platform-linux--64-yellow.svg)]()
-
-
+ [![Packagist](https://img.shields.io/badge/game-Factorio-orange.svg)]()  [![Packagist](https://img.shields.io/packagist/l/doctrine/orm.svg)]()  [![Packagist](https://img.shields.io/badge/language-python3.5-brightgreen.svg)]() [![Packagist](https://img.shields.io/badge/platform-linux--64-yellow.svg)]()
 #
 
 
