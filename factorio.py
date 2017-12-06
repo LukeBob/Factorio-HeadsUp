@@ -13,21 +13,16 @@ class Color():
     @staticmethod
     def red(str):
         return "\033[91m" + str + "\033[0m"
-
     @staticmethod
     def green(str):
         return "\033[92m" + str + "\033[0m"
-
     @staticmethod
     def yellow(str):
         return "\033[93m" + str + "\033[0m"
-
     @staticmethod
     def blue(str):
         return "\033[94m" + str + "\033[0m"
 
-
-## Banner
 banner = (Color.green(
     """
  _____         _             _         _   _                _     _   _
@@ -41,38 +36,31 @@ banner = (Color.green(
 Author: {0}
     """).format(Color.blue(Author)))
 
-
-
-
-## Factorio Main Class Example, app = Factorio('Stable').RequestVersion() <== Gets you Latest Version From https://factorio.com/
-class Factorio():
-    def __init__(self, version):
-        self.version      = version
-        self.url          = 'https://www.factorio.com'
-        self.experimental = '/download-headless/experimental'
-        self.stable       = '/download-headless/stable'
+## Factorio Main Class Example, (stable, experimental) = Factorio.RequestVersions() <== Gets you Latest Versions From https://factorio.com/
+class Factorio:
 
 ## Gets Latest Version
-    def RequestVersion(self):
-        try:
-            r=requests.get(self.url)
+    def RequestVersions():
 
+        try:
+            r=requests.get('https://www.factorio.com')
             s = re.findall("Stable: (\d{0,3}.\d{0,3}.\d{0,3})", r.text)
             e = re.findall("Experimental: (\d{0,3}.\d{0,3}.\d{0,3})", r.text)
 
-            if self.version == 'stable':
-                i = s[0]
-                return(i)
+            stable       = s[0]
+            experimental = e[0]
 
-            elif self.version == 'experimental':
-                i = e [0]
-                return(i)
+            if stable == 'No':
+                stable = 'None'
+            if experimental == 'No':
+                experimental = 'None'
+            return(stable, experimental)
+
         except:
             print(Color.red("\n[Error]:")+"Could not find the latest version from: https://www.factorio.com")
             exit(0)
 
-
-## Downloads Latest Version
+## Downloads Latest Version Example, Factorio.Download("0.14.3") <== Downloads latest version based on version number given
     @staticmethod
     def Download(version):
         url = "https://www.factorio.com/get-download/{0}/headless/linux64".format(version)
@@ -100,22 +88,18 @@ class Factorio():
             print(Color.red("\n[Error]:")+" Tarfile could not open file {0}. Are you using python3 ?. ".format(Color.blue(local_filename)))
             exit(0)
 
-
 ## Gets New Json Data Ready For Writing To New Json File
 def write_json(sta_cur, exp_cur):
     data = {}
     data['Stable'] = sta_cur
     data['Experimental'] = exp_cur
-
-    ## Clear Last
     with open("Config.json", 'w') as f:
         json.dump([], f)
 
     with open("Config.json", 'w') as f:
         json.dump(data, f)
 
-
-## Writes New Json Config
+## Updates config.json
 def update_config(type, version):
     (sta_cur, exp_cur) = parse_config()
     if type == "stable":
@@ -136,8 +120,6 @@ def update_config(type, version):
         print(Color.green("\n===>")+" Updated Json Config")
         print(Color.green("\n===>")+" Finished...\n")
 
-
-
 ## Removes old factorio.tar.gz
 def Remove_junk(version):
     try:
@@ -146,8 +128,6 @@ def Remove_junk(version):
     except:
         raise
     print(Color.green("\n===>")+" Removed Junk Files")
-
-
 
 ## Parses Current Versions From Json Configs
 def parse_config():
@@ -163,7 +143,6 @@ def parse_config():
     exp_cur = config["Experimental"]
     return(sta_cur, exp_cur)
 
-
 def print_versions(our_ver, site_ver):
     print("""
 ------------------------
@@ -173,25 +152,19 @@ Latest Version: ({1})
 ------------------------
         """.format(Color.red(our_ver), Color.green(site_ver)))
 
-## Main Stuff
+
 def main(args, parser):
 
-## Stable object
-    stab_app = Factorio('stable')
-## Experimental object
-    exp_app  = Factorio('experimental')
-## Latest Stable Version
-    stab_ver = stab_app.RequestVersion()
-## Latest Experimental Version
-    exp_ver  = exp_app.RequestVersion()
+## Latest stable & experimental versions from factorio.com
+    (stab_ver, exp_ver) = Factorio.RequestVersions()
+
 ## Our Versions From Config.json
     (sta_cur, exp_cur) = parse_config()
-
 
 ## stable check
     if args.stable and args.check:
         if stab_ver != sta_cur:
-            if stab_ver == 'No':
+            if stab_ver == 'None':
                 print_versions(sta_cur, "None")
                 print(Color.red("\n[+] Error: ")+"No Latest \"Stable\" Version Available!\n")
             else:
@@ -211,19 +184,18 @@ def main(args, parser):
             exit(0)
 
         elif stab_ver != sta_cur:
-            if stab_ver == 'No':
+            if stab_ver == 'None':
                 print(Color.red("\n[+] Error: ")+"No Latest \"Stable\" Version Available!\n")
                 exit(0)
             else:
-                stab_app.Download(stab_ver)
+                Factorio.Download(stab_ver)
                 Remove_junk(stab_ver)
                 update_config('stable', stab_ver)
-
 
 ## experimental check
     elif args.experimental and args.check:
         if exp_ver != exp_cur:
-            if exp_ver == 'No':
+            if exp_ver == 'None':
                 print_versions(exp_cur, "None")
                 print(Color.red("\n[+] Error: ")+"No Latest \"Experimental\" Version Available!\n")
             else:
@@ -243,11 +215,11 @@ def main(args, parser):
             exit(0)
 
         elif exp_ver != exp_cur:
-            if exp_ver == 'No':
+            if exp_ver == 'None':
                 print(Color.red("\n[+] Error: ")+"No Latest \"Experimental\" Version Available!\n")
                 exit(0)
             else:
-                exp_app.Download(exp_ver)
+                Factorio.Download(exp_ver)
                 Remove_junk(exp_ver)
                 update_config('experimental', exp_ver)
                 exit(0)
