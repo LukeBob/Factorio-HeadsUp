@@ -26,7 +26,7 @@ class Color():
     def blue(str):
         return "\033[94m" + str + "\033[0m"
 
-    
+
 ## Banner
 banner = (Color.green(
     """
@@ -137,7 +137,7 @@ def update_config(type, version):
         print(Color.green("\n===>")+" Finished...\n")
 
 
-        
+
 ## Removes old factorio.tar.gz
 def Remove_junk(version):
     try:
@@ -164,99 +164,93 @@ def parse_config():
     return(sta_cur, exp_cur)
 
 
-
-class print_versions:
-
-    @staticmethod
-    def stable(sta_cur, site_version):
-
-        print("""
+def print_versions(our_ver, site_ver):
+    print("""
 ------------------------
 Your version:   ({0})
 ------------------------
 Latest Version: ({1})
 ------------------------
-        """.format(Color.red(sta_cur), Color.green(site_version)))
-
-
-    @staticmethod
-    def experimental(exp_cur, site_version):
-        print("""
-------------------------
-Your version:   ({0})
-------------------------
-Latest Version: ({1})
-------------------------
-        """.format(Color.red(exp_cur), Color.green(site_version)))
-
-
+        """.format(Color.red(our_ver), Color.green(site_ver)))
 
 ## Main Stuff
 def main(args, parser):
 
+## Stable object
+    stab_app = Factorio('stable')
+## Experimental object
+    exp_app  = Factorio('experimental')
+## Latest Stable Version
+    stab_ver = stab_app.RequestVersion()
+## Latest Experimental Version
+    exp_ver  = exp_app.RequestVersion()
+## Our Versions From Config.json
+    (sta_cur, exp_cur) = parse_config()
+
+
 ## stable check
     if args.stable and args.check:
-        app = Factorio('stable')
-        site_version = app.RequestVersion()
-        (sta_cur, exp_cur) = parse_config()
+        if stab_ver != sta_cur:
+            if stab_ver == 'No':
+                print_versions(sta_cur, "None")
+                print(Color.red("\n[+] Error: ")+"No Latest \"Stable\" Version Available!\n")
+            else:
+                print_versions(sta_cur, stab_ver)
+                print(Color.green("\n\n===>")+" New Update Available -- Version ({0}), Update with, \"python3 factorio.py --stable --download\"\n".format(Color.blue(stab_ver)))
+                exit(0)
 
-        if site_version != sta_cur:
-            print_versions.stable(sta_cur, site_version)
-            print(Color.green("\n\n===>")+" New Update Available -- Version ({0}), Update with, \"python3 factorio.py --stable --download\"\n".format(Color.blue(site_version)))
-            exit(0)
-
-        elif site_version == sta_cur:
-            print_versions.stable(sta_cur, site_version)
-            print(Color.green("\n\n===>")+" Up to date with the latest binary -- Version ({0})\n".format(Color.blue(site_version)))
+        elif stab_ver == sta_cur:
+            print_versions(sta_cur, stab_ver)
+            print(Color.green("\n\n===>")+" Up to date with the latest binary -- Version ({0})\n".format(Color.blue(stab_ver)))
             exit(0)
 
 ## stable download
     elif args.stable and args.download:
-        app = Factorio('stable')
-        site_version = app.RequestVersion()
-        (sta_cur, exp_cur) = parse_config()
-
-        if site_version == sta_cur:
-            print(Color.red("\n[+] ERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json stable value back to (0) and running again.\n".format(Color.blue(sta_cur)))
+        if stab_ver == sta_cur:
+            print(Color.red("\n[+] ERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json stable value back to (0) and running again.\n".format(Color.blue(stab_ver)))
             exit(0)
-            
-        elif site_version != sta_cur:
-            app.Download(site_version)
-            Remove_junk(site_version)
-            update_config('stable', site_version)
 
-            
+        elif stab_ver != sta_cur:
+            if stab_ver == 'No':
+                print(Color.red("\n[+] Error: ")+"No Latest \"Stable\" Version Available!\n")
+                exit(0)
+            else:
+                stab_app.Download(stab_ver)
+                Remove_junk(stab_ver)
+                update_config('stable', stab_ver)
+
+
 ## experimental check
     elif args.experimental and args.check:
-        app = Factorio('experimental')
-        site_version = app.RequestVersion()
-        (sta_cur, exp_cur) = parse_config()
+        if exp_ver != exp_cur:
+            if exp_ver == 'No':
+                print_versions(exp_cur, "None")
+                print(Color.red("\n[+] Error: ")+"No Latest \"Experimental\" Version Available!\n")
+            else:
+                print_versions(exp_cur, exp_ver)
+                print(Color.green("\n\n===>")+" New Update Available -- Version ({0}), Update with, \"python3 factorio.py --experimental --download\"\n".format(Color.blue(exp_ver)))
+                exit(0)
 
-        if site_version != exp_cur:
-            print_versions.experimental(exp_cur, site_version)
-            print(Color.green("\n\n===>")+" New Update Available -- Version ({0}), Update with, \"python3 factorio.py --experimental --download\"\n".format(Color.blue(site_version)))
-            exit(0)
-
-        elif site_version == exp_cur:
-            print_versions.experimental(exp_cur, site_version)
-            print(Color.green("\n\n===>")+" Up to date with the latest binary -- Version ({0})\n".format(Color.blue(site_version)))
+        elif exp_ver == exp_cur:
+            print_versions(exp_cur, exp_ver)
+            print(Color.green("\n\n===>")+" Up to date with the latest binary -- Version ({0})\n".format(Color.blue(exp_ver)))
             exit(0)
 
 ## experimental download
     elif args.experimental and args.download:
-        app = Factorio('experimental')
-        site_version = app.RequestVersion()
-        (sta_cur, exp_cur) = parse_config()
-
-        if site_version == exp_cur:
+        if exp_ver == exp_cur:
             print(Color.red("\n[+] ERROR: ")+"Version ({0}) already up to date, Force download by changing Config.json experimental value back to (0) and running again.\n".format(Color.blue(exp_cur)))
             exit(0)
 
-        elif site_version != exp_cur:
-            app.Download(site_version)
-            Remove_junk(site_version)
-            update_config('experimental', site_version)
-            exit(0)
+        elif exp_ver != exp_cur:
+            if exp_ver == 'No':
+                print(Color.red("\n[+] Error: ")+"No Latest \"Experimental\" Version Available!\n")
+                exit(0)
+            else:
+                exp_app.Download(exp_ver)
+                Remove_junk(exp_ver)
+                update_config('experimental', exp_ver)
+                exit(0)
     else:
         parser.print_help()
         exit(0)
@@ -271,3 +265,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(banner)
     main(args, parser)
+
